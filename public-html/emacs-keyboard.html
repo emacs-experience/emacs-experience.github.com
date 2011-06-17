@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Optimizing a WIN-Keyboard for Emacs</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2011-01-19 18:49:17 CET"/>
+<meta name="author" content="bebop52"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="content">
+
+<h1 class="title">Optimizing a WIN-Keyboard for Emacs</h1>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 The Emacs Keyboard </a>
+<ul>
+<li><a href="#sec-1_1">1.1 Why the keyboard matters </a></li>
+<li><a href="#sec-1_2">1.2 My Setup </a>
+<ul>
+<li><a href="#sec-1_2_1">1.2.1 Software </a></li>
+<li><a href="#sec-1_2_2">1.2.2 Hardware </a></li>
+</ul>
+</li>
+<li><a href="#sec-1_3">1.3 My Findings </a>
+<ul>
+<li><a href="#sec-1_3_1">1.3.1 10-finger-typing </a></li>
+<li><a href="#sec-1_3_2">1.3.2 Hardware </a></li>
+<li><a href="#sec-1_3_3">1.3.3 Software </a>
+<ul>
+<li><a href="#sec-1_3_3_1">1.3.3.1 Make a copy of xmodmap </a></li>
+<li><a href="#sec-1_3_3_2">1.3.3.2 Find out the keycodes of the keys to be redefined </a></li>
+<li><a href="#sec-1_3_3_3">1.3.3.3 Redefine the keys </a></li>
+<li><a href="#sec-1_3_3_4">1.3.3.4 Make the X window system load .Xmodmap </a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-1_4">1.4 Evaluation </a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> The Emacs Keyboard </h2>
+<div class="outline-text-2" id="text-1">
+
+
+</div>
+
+<div id="outline-container-1_1" class="outline-3">
+<h3 id="sec-1_1"><span class="section-number-3">1.1</span> Why the keyboard matters </h3>
+<div class="outline-text-3" id="text-1_1">
+
+<p>The USP (Unique Selling Proposition) of Emacs is enhanced
+productivity. One key element to achieve productivity is the almost
+exclusive use of the keyboard. Therefore, Emacs-users are a bit like
+musicians. They are constantly searching for the most economical and
+ergonomical ways to grab the Emacs key combinations (see <a href="http://www.math.uh.edu/~bgb/emacs_keys.html">Cool Keys in Emacs</a>) without risking Repeated (or Repetetive) Strain Injuries or RSI
+(see <a href="http://www.emacswiki.org/emacs/RepeatedStrainInjury">RepeatedStrainInjury</a>).
+When I started using Emacs a year ago or so I was quite good at typing
+with two fingers and initially saw no need to change that, since
+usually thinking took me much longer than typing. I invented my own
+propietary ways to grab the Emacs key chords, sometimes wondering how
+anybody could bring up such strange key combinations that made my
+fingers hurt. Steve Yegge's <a href="http://sites.google.com/site/steveyegge2/effective-emacs">effective-emacs</a> destroyed this
+complacency. I realized that Emacs was all about productivity, and my
+autodidactic technique left little room for improvement, even with
+much daily practice. Further I realized that Emacs key combinations
+have historical reasons, i.e. they were invented by skilled
+10-finger-typers for the keyboards of their times.
+Therefore I decided to take the challenge and
+</p><ol>
+<li>
+learn to type with 10 fingers (using <a href="http://www.tipp10.de/">tipp10</a>)
+</li>
+<li>
+do some research about Emacs and keyboards
+</li>
+</ol>
+
+</div>
+
+</div>
+
+<div id="outline-container-1_2" class="outline-3">
+<h3 id="sec-1_2"><span class="section-number-3">1.2</span> My Setup </h3>
+<div class="outline-text-3" id="text-1_2">
+
+
+</div>
+
+<div id="outline-container-1_2_1" class="outline-4">
+<h4 id="sec-1_2_1"><span class="section-number-4">1.2.1</span> Software </h4>
+<div class="outline-text-4" id="text-1_2_1">
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left">Software</th><th scope="col" class="left">Version</th></tr>
+</thead>
+<tbody>
+<tr><td class="left">Operating System</td><td class="left"><code>Ubuntu 10.10 - »Maverick Meerkat«</code></td></tr>
+<tr><td class="left">Desktop Manager</td><td class="left"><code>Gnome Version: 2.32.0</code></td></tr>
+<tr><td class="left">Editor</td><td class="left"><code>GNU Emacs 23.1.1 (i486-pc-linux-gnu, GTK+ Version  2.20.0) of 2010-03-29 on rothera, modified by Debian</code></td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+<div id="outline-container-1_2_2" class="outline-4">
+<h4 id="sec-1_2_2"><span class="section-number-4">1.2.2</span> Hardware </h4>
+<div class="outline-text-4" id="text-1_2_2">
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left">Keyboard</th><th scope="col" class="left">Version</th></tr>
+</thead>
+<tbody>
+<tr><td class="left">Cherry</td><td class="left"><code>RS 6000 M</code></td></tr>
+</tbody>
+</table>
+
+I use a regular windows keyboard that looks exactly like this
+<a href="http://de.wikipedia.org/wiki/Tastenbelegung">IBM/Windows Keyboard</a> with German Keymap.
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1_3" class="outline-3">
+<h3 id="sec-1_3"><span class="section-number-3">1.3</span> My Findings </h3>
+<div class="outline-text-3" id="text-1_3">
+
+
+</div>
+
+<div id="outline-container-1_3_1" class="outline-4">
+<h4 id="sec-1_3_1"><span class="section-number-4">1.3.1</span> 10-finger-typing </h4>
+<div class="outline-text-4" id="text-1_3_1">
+
+<p>I used <a href="http://orgmode.org/">orgmode</a> to clock my daily exercises with tipp10, and with a
+total effort of 8h (1h a day) I was ready to abandon 2-finger-typing,
+although things are still slow and I make a lot of mistakes.
+As a freshly initialized 10-finger-typer, I had to relearn the Emacs key
+combinations. First I thought about swapping the <code>Caps_Lock</code> and the
+<code>Control_L</code> keys and to continue grabbing the Emacs chords mainly with
+with the left hand. But it seemed obvious (at least to me) that the
+use of the <code>Control</code> and <code>Meta</code> keys in Emacs should follow the same
+logic as the use of the <code>Shift</code> keys in normal 10-finger-typing: press
+the left <code>Shift</code> key, when typing with the right hand, and the right
+<code>Shift</code> key when typing with the left hand. But the positions of the
+<code>Control</code> keys on my <code>IBM/Windows</code> keyboard seemed extremely
+uncomfortable, forcing the hand to move quite a lot to reach these
+frequently used keys. And there was only one <code>Meta</code> key, the <code>Alt</code> key
+at the left side of the space key.
+</p></div>
+
+</div>
+
+<div id="outline-container-1_3_2" class="outline-4">
+<h4 id="sec-1_3_2"><span class="section-number-4">1.3.2</span> Hardware </h4>
+<div class="outline-text-4" id="text-1_3_2">
+
+<p>One solution that came to my mind was to buy a new keyboard with a
+keymap that was more suitable for Emacs. I found one that looks really
+good, although it has only one <code>Control</code> key: the
+<a href="http://www.pfusystems.com/hhkeyboard/hhkeyboard.html">happy-hacking-keyboard</a>. But it's quite expensive too. So I decided to
+stick with my old keyboard and to look for a solution on the software side.
+</p></div>
+
+</div>
+
+<div id="outline-container-1_3_3" class="outline-4">
+<h4 id="sec-1_3_3"><span class="section-number-4">1.3.3</span> Software </h4>
+<div class="outline-text-4" id="text-1_3_3">
+
+<p>It took me many hours of research on the web until I succesfully
+redefined my keyboard for effective use with Emacs.
+First I had to make up my mind about keybindings suitable for Emacs. I
+wanted the <code>Control</code> keys immediately at the left and right hand side
+of the space key, so I could use my thumbs for them just like pressing
+the space key. Then I wanted two <code>Alt</code> keys, one on each side of the
+<code>Control</code> keys, so I could either press them with my thumbs or with my
+pinky fingers.
+This is easily achieved using the gnome menu as described <a href="http://library.gnome.org/users/user-guide/stable/prefs-keyboard.html.en">here</a>. There
+is one option among the <code>keyboard layout options</code> called <code>Alt-Win key behavior</code> that allows one to assign the <code>Control</code> keys to the <code>Alt</code>
+keys and the <code>Alt</code> keys to the <code>Win</code> keys in turn. While at it, I had
+a look at the other options in this menu and found two more that
+seemed very convenient:
+</p><ul>
+<li>
+use <code>Caps_Lock</code> as additional <code>Backspace</code> key
+</li>
+<li>
+use the (old) right <code>Control</code> key (<code>Control_R</code>) as new <code>AltGr</code> key
+(<code>ISO_Level3_Shift</code>)
+</li>
+</ul>
+
+<p>A few problems still remained:
+</p><ul>
+<li>
+I needed another <code>AltGr</code> key on the (old) left <code>Control</code> key (<code>Control_L</code>),
+since many important symbols like <code>{} [] \ ~</code> are typed with
+the right hand.
+</li>
+<li>
+the old <code>Backspace</code> key was redundant now.
+</li>
+<li>
+tilde, acute and circumflex were <code>dead keys</code>, I needed to press the
+space key after pressing the dead key to make the symbols show up.
+</li>
+</ul>
+
+<p>That was a bit tricky, but finally I made it. The key to success was
+<a href="http://wiki.ubuntuusers.de/xmodmap">xmodmap</a>. Here are the steps I followed to adapt my keyboard to an
+efficient use of Emacs:
+</p>
+</div>
+
+<div id="outline-container-1_3_3_1" class="outline-5">
+<h5 id="sec-1_3_3_1"><span class="section-number-5">1.3.3.1</span> Make a copy of xmodmap </h5>
+<div class="outline-text-5" id="text-1_3_3_1">
+
+<p>Start a shell in your home directory (represented by ~) and type
+the following:
+</p>
+
+
+<pre class="src src-sh">xmodmap -pke &gt; ~/.Xmodmaprc
+</pre>
+
+
+<p>
+You will find a copy of your actual keymap in the new file
+.Xmodmaprc. The symbols and everything is explained in <a href="http://wiki.ubuntuusers.de/xmodmap">xmodmap</a>.
+Since we want to change the binding for a <code>Control</code> key, one out of 8
+special keys, we need to insert the following at the beginning of the
+.Xmodmaprc file:
+</p>
+
+
+<pre class="src src-sh">!clear Shift
+!clear Lock
+clear Control
+!clear Mod1
+!clear Mod2
+!clear Mod3
+!clear Mod4
+!clear Mod5
+</pre>
+
+
+<p>
+Then we have to insert the following at the end of the file:
+</p>
+
+
+<pre class="src src-sh">!add Shift   = Shift_L Shift_R
+!add Lock    = Caps_Lock
+add Control = Control_L Control_R
+!add Mod1    = Alt_L Alt_R
+!add Mod2    = Mode_switch
+!add Mod3    = Num_Lock
+!add Mod4    =
+!add Mod5    =
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1_3_3_2" class="outline-5">
+<h5 id="sec-1_3_3_2"><span class="section-number-5">1.3.3.2</span> Find out the keycodes of the keys to be redefined </h5>
+<div class="outline-text-5" id="text-1_3_3_2">
+
+<p>Start a shell and use either
+</p>
+
+
+<pre class="src src-sh">xbindkeys -k
+</pre>
+
+
+<p>
+(use -mk for key combinations) or
+</p>
+
+
+<pre class="src src-sh">xev
+</pre>
+
+
+<p>
+to find out which key has which keycode and how the keysyms are called
+that you want to assign (some valid keysyms are found <a href="http://wiki.linuxquestions.org/wiki/List_of_Keysyms_Recognised_by_Xmodmap">here</a>).
+Here is an <span style="text-decoration:underline;">Example</span>: since I already have two new <code>Control</code> keys at
+both sides of the space key, I don't need the old <code>Control_L</code> key
+anymore. I want to assign <code>ISO_Level3_Shift</code> (<code>AltGr</code>) to this key,
+since I need that key urgently on the left side of the keyboard. I
+type xbindkeys -k in a shell and press enter. Then I press the key I'm
+interested in. First I press the newly defined <code>AltGr</code> key (the former
+<code>Control_R</code> key, that was redefined using the gnome <code>keyboard layout options</code>) and find out that it's keycode is 105 (in my case,
+check on your machine). Then I repeat the procedure and press the old
+<code>Control_L</code> key to find out that it's keycode is 37.
+</p>
+
+
+<pre class="src src-sh">tj1@tj-desktop:~$ xbindkeys -k
+press combination of keys or/and click under the window.
+You can use one of the two lines after <span style="color: #bc8f8f;">"NoCommand"</span>
+<span style="color: #a020f0;">in</span> $<span style="color: #b8860b;">HOME</span>/.xbindkeysrc to bind a key.
+<span style="color: #bc8f8f;">"NoCommand"</span>
+    m:0x90 + c:105
+    Mod2+Mod5 + ISO_Level3_Shift
+tj1@tj-desktop:~$ xbindkeys -k
+Press combination of keys or/and click under the window.
+You can use one of the two lines after <span style="color: #bc8f8f;">"NoCommand"</span>
+<span style="color: #a020f0;">in</span> $<span style="color: #b8860b;">HOME</span>/.xbindkeysrc to bind a key.
+<span style="color: #bc8f8f;">"NoCommand"</span>
+    m:0x90 + c:37
+    Mod2+Mod5 + ISO_Level3_Shift
+tj1@tj-desktop:~$
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1_3_3_3" class="outline-5">
+<h5 id="sec-1_3_3_3"><span class="section-number-5">1.3.3.3</span> Redefine the keys </h5>
+<div class="outline-text-5" id="text-1_3_3_3">
+
+<p>With this information, I visit the .Xmodmaprc in my home directory and
+look up the following line:
+</p>
+
+
+<pre class="src src-sh">keycode 105 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
+</pre>
+
+
+<p>
+I copy and paste the right hand side of this assignment to the right
+hand side of keycode 37 and end up with a second <code>AltGr</code> key:
+</p>
+
+
+<pre class="src src-sh">keycode  37 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
+</pre>
+
+
+<p>
+Now, what can I do with the redundant old <code>Backspace</code> key, replaced by
+the old <code>Caps_Lock</code> key? I use it for two very important Emacs
+commands:
+</p>
+
+
+<pre class="src src-emacs-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">It is bound to ... &lt;S-menu&gt; ...  M-x
+</span>execute-extended-command
+<span style="color: #b22222;">;; </span><span style="color: #b22222;">It is bound to &lt;menu&gt;, M-/
+</span>dabbrev-expand
+</pre>
+
+
+<p>
+First, I assign the keysym of the <code>Menu</code> key to the old <code>Backspace</code>
+key. Then I have two menu keys. On my machine, the <code>Menu</code> key already
+had an Emacs binding to the very frequently used command
+execute-extended-command (M-x, see <a href="http://emacsblog.org/">M-x all-things-emacs</a>). I changed
+that global binding in my .emacs file to <code>S-menu</code> (<code>shift</code> and
+<code>menu</code>), so I could use <code>menu</code> for the even more important
+dabbrev-expand command:
+</p>
+
+
+<pre class="src src-emacs-lisp"><span style="color: #b22222;">; </span><span style="color: #b22222;">global key for dabbrev-expand
+</span>(global-set-key [menu] 'dabbrev-expand)
+<span style="color: #b22222;">; </span><span style="color: #b22222;">global key for execute-extended-command
+</span>(global-set-key [S-menu] 'execute-extended-command)
+</pre>
+
+
+<p>
+Finally, I go back once again to the .Xmodmaprc file and
+search-and-replace <code>dead_tilde</code>, <code>dead_circumflex</code>, <code>dead_grave</code> and
+<code>dead_acute</code> with <code>asciitilde</code>, <code>asciicircum</code>, <code>grave</code> and <code>acute</code>, where it
+seems convenient.
+As a side-note, maybe I should mention that I use <a href="http://www.emacswiki.org/emacs/WinRing">winring</a> as a window
+manager in emacs and I did bind <code>&lt;f5&gt;, &lt;f6&gt;, &lt;f7&gt;</code> to the three
+important winring.el commands (in my .emacs):
+</p>
+
+
+<pre class="src src-emacs-lisp"><span style="color: #b22222;">; </span><span style="color: #b22222;">put the 3 crucial winring commands on the f5 to f7 keys
+</span>(global-set-key (kbd <span style="color: #bc8f8f;">"&lt;f5&gt;"</span>) 'winring-prev-configuration)
+(global-set-key (kbd <span style="color: #bc8f8f;">"&lt;f6&gt;"</span>) 'winring-next-configuration)
+(global-set-key (kbd <span style="color: #bc8f8f;">"&lt;f7&gt;"</span>) 'winring-jump-to-configuration)
+</pre>
+
+
+<p>
+I use <a href="http://www.emacswiki.org/emacs/Yasnippet">yasnippet</a> too, and since its use of the <code>TAB</code> key conflicts with
+other Emacs modes, I use <code>&lt;f8&gt;</code> to expand snippets with command
+<code>yas/expand</code>.
+</p></div>
+
+</div>
+
+<div id="outline-container-1_3_3_4" class="outline-5">
+<h5 id="sec-1_3_3_4"><span class="section-number-5">1.3.3.4</span> Make the X window system load .Xmodmap </h5>
+<div class="outline-text-5" id="text-1_3_3_4">
+
+<p>To ensure that the redefined .Xmodmaprc file is loaded at each start
+of a new X session, create a new ~/.xinitrc in your home directory, look
+for the original .xinitrc, on my machine in
+</p>
+
+
+<pre class="src src-sh">/etc/X11/xinit/xinitrc
+</pre>
+
+
+<p>
+and copy it's content to the .xinitrc in your home directory. Then add
+the following line:
+</p>
+
+
+<pre class="src src-sh">xmodmap ~/.Xmodmap
+</pre>
+
+
+<p>
+and logout once from your desktop and login again. From now on the
+redefined .Xmodmaprc should be loaded always at the start of a new
+X session, and you should have a keyboard much more suitable for Emacs
+than before. Don't forget to use <code>C-m</code> (<code>Control_L</code> and <code>m</code>) instead  of the
+<code>Return</code> key, it fits very good with the new key-bindings. And
+remember that you can use a screw-driver to put the plastic caps of
+your keyboard to the right places.
+</p></div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1_4" class="outline-3">
+<h3 id="sec-1_4"><span class="section-number-3">1.4</span> Evaluation </h3>
+<div class="outline-text-3" id="text-1_4">
+
+<p>I like my new keybindings, and I hope I can settle down on them and
+develop some automatisms in using them from now on. But anyway, I view the
+efforts to increase my productivity with Emacs as an ongoing
+process. Of course, there are some disadvantages too:
+</p><ul>
+<li>
+the <code>Caps_Lock</code> functionality is gone.
+</li>
+<li>
+I make heavy use of non-standard Windows keys. Does that work on a
+terminal too? Probably not suitable for admins.
+</li>
+<li>
+I own a Win 7 notebook. There are less keys than on my regular
+keyboard, and the Win keys do have their original funcionality under
+Windows. How do I change the keybindings under Windows 7? I hope
+it's easier.
+</li>
+<li>
+I'm going to have problems working with standard keybindings on other
+machines once I get used to my own keybindings.
+</li>
+</ul>
+
+<p>However, 95pc of the time I work with my own setup, and thats much
+more comfortable now.
+</p></div>
+</div>
+</div>
+<div id="postamble">
+<p class="author"> Author: bebop52
+</p>
+<p class="date"> Date: 2011-01-19 18:49:17 CET</p>
+<p class="creator">HTML generated by org-mode 7.4 in emacs 23</p>
+</div>
+</div>
+</body>
+</html>

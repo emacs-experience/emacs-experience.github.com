@@ -1,0 +1,55 @@
+#+SETUPFILE: ~/projects/org-templates/level-0.org
+#+TITLE: Emacs-Experience @<br/> /The/ /Path/ /to/ /Productivity/
+
+
+* Introduction
+This blog serves two purposes:
+
+1. *replace long-term memory:* in case I have to repeat a task later.
+2. *share insights:* what took me hours, might take others only
+   minutes. 
+
+It should document my way to Emacs-enlightment, i.e. enhanced
+productivity by learning one software well instead of many
+sketchily. The table of contents shows the topics I'm interested in,
+and I hope there will appear more and more blog posts under the
+headlines over time.
+
+* System
+
+** Linux
+[[file:public-html/emacs-keyboard.html][Adapt the keyboard to Emacs keybindings (1)]] 
+
+** Windows
+
+* Emacs
+
+** Org
+
+** EShell
+
+** LaTex
+
+** ESS
+
+** w3m
+
+** Gnus
+
+** Dired
+
+** Ledger
+
+** Calc
+
+* Lisp
+
+** Elisp
+
+** PicoLisp
+
+
+
+
+
+

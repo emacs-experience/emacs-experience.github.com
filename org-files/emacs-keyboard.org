@@ -1,0 +1,245 @@
+ #+TITLE: Optimizing a WIN-Keyboard for Emacs
+#+OPTIONS: H:4
+#+OPTIONS: toc:4
+* The Emacs Keyboard
+** Why the keyboard matters
+The USP (Unique Selling Proposition) of Emacs is enhanced
+productivity. One key element to achieve productivity is the almost
+exclusive use of the keyboard. Therefore, Emacs-users are a bit like
+musicians. They are constantly searching for the most economical and
+ergonomical ways to grab the Emacs key combinations (see [[http://www.math.uh.edu/~bgb/emacs_keys.html][Cool Keys in
+Emacs]]) without risking Repeated (or Repetetive) Strain Injuries or RSI
+(see [[http://www.emacswiki.org/emacs/RepeatedStrainInjury][RepeatedStrainInjury]]).
+When I started using Emacs a year ago or so I was quite good at typing
+with two fingers and initially saw no need to change that, since
+usually thinking took me much longer than typing. I invented my own
+propietary ways to grab the Emacs key chords, sometimes wondering how
+anybody could bring up such strange key combinations that made my
+fingers hurt. Steve Yegge's [[http://sites.google.com/site/steveyegge2/effective-emacs][effective-emacs]] destroyed this
+complacency. I realized that Emacs was all about productivity, and my
+autodidactic technique left little room for improvement, even with
+much daily practice. Further I realized that Emacs key combinations
+have historical reasons, i.e. they were invented by skilled
+10-finger-typers for the keyboards of their times.
+Therefore I decided to take the challenge and
+1. learn to type with 10 fingers (using [[http://www.tipp10.de/][tipp10]])
+2. do some research about Emacs and keyboards
+** My Setup
+*** Software
+| Software         | Version                                            |
+|------------------+----------------------------------------------------|
+|                  | <50>                                               |
+| Operating System | ~Ubuntu 10.10 - »Maverick Meerkat«~                |
+| Desktop Manager  | ~Gnome Version: 2.32.0~                            |
+| Editor           | ~GNU Emacs 23.1.1 (i486-pc-linux-gnu, GTK+ Version  2.20.0) of 2010-03-29 on rothera, modified by Debian~ |
+*** Hardware
+| Keyboard | Version     |
+|----------+-------------|
+| Cherry   | ~RS 6000 M~ |
+I use a regular windows keyboard that looks exactly like this
+[[http://de.wikipedia.org/wiki/Tastenbelegung][IBM/Windows Keyboard]] with German Keymap.
+** My Findings
+*** 10-finger-typing
+I used [[http://orgmode.org/][orgmode]] to clock my daily exercises with tipp10, and with a
+total effort of 8h (1h a day) I was ready to abandon 2-finger-typing,
+although things are still slow and I make a lot of mistakes.
+As a freshly initialized 10-finger-typer, I had to relearn the Emacs key
+combinations. First I thought about swapping the ~Caps_Lock~ and the
+~Control_L~ keys and to continue grabbing the Emacs chords mainly with
+with the left hand. But it seemed obvious (at least to me) that the
+use of the ~Control~ and ~Meta~ keys in Emacs should follow the same
+logic as the use of the ~Shift~ keys in normal 10-finger-typing: press
+the left ~Shift~ key, when typing with the right hand, and the right
+~Shift~ key when typing with the left hand. But the positions of the
+~Control~ keys on my ~IBM/Windows~ keyboard seemed extremely
+uncomfortable, forcing the hand to move quite a lot to reach these
+frequently used keys. And there was only one ~Meta~ key, the ~Alt~ key
+at the left side of the space key.
+*** Hardware
+One solution that came to my mind was to buy a new keyboard with a
+keymap that was more suitable for Emacs. I found one that looks really
+good, although it has only one ~Control~ key: the
+[[http://www.pfusystems.com/hhkeyboard/hhkeyboard.html][happy-hacking-keyboard]]. But it's quite expensive too. So I decided to
+stick with my old keyboard and to look for a solution on the software side.
+*** Software
+It took me many hours of research on the web until I succesfully
+redefined my keyboard for effective use with Emacs.
+First I had to make up my mind about keybindings suitable for Emacs. I
+wanted the ~Control~ keys immediately at the left and right hand side
+of the space key, so I could use my thumbs for them just like pressing
+the space key. Then I wanted two ~Alt~ keys, one on each side of the
+~Control~ keys, so I could either press them with my thumbs or with my
+pinky fingers.
+This is easily achieved using the gnome menu as described [[http://library.gnome.org/users/user-guide/stable/prefs-keyboard.html.en][here]]. There
+is one option among the ~keyboard layout options~ called ~Alt-Win key
+behavior~ that allows one to assign the ~Control~ keys to the ~Alt~
+keys and the ~Alt~ keys to the ~Win~ keys in turn. While at it, I had
+a look at the other options in this menu and found two more that
+seemed very convenient:
+- use ~Caps_Lock~ as additional ~Backspace~ key
+- use the (old) right ~Control~ key (~Control_R~) as new ~AltGr~ key
+  (~ISO_Level3_Shift~)
+A few problems still remained:
+- I needed another ~AltGr~ key on the (old) left ~Control~ key (~Control_L~),
+  since many important symbols like ={} [] \ ~= are typed with
+  the right hand.
+- the old ~Backspace~ key was redundant now.
+- tilde, acute and circumflex were ~dead keys~, I needed to press the
+  space key after pressing the dead key to make the symbols show up.
+That was a bit tricky, but finally I made it. The key to success was
+[[http://wiki.ubuntuusers.de/xmodmap][xmodmap]]. Here are the steps I followed to adapt my keyboard to an
+efficient use of Emacs.
+**** Make a copy of xmodmap
+Start a shell in your home directory (represented by ~) and type
+   the following:
+#+begin_src sh
+  xmodmap -pke > ~/.Xmodmaprc
+#+end_src
+You will find a copy of your actual keymap in the new file
+.Xmodmaprc. The symbols and everything is explained in [[http://wiki.ubuntuusers.de/xmodmap][xmodmap]].
+Since we want to change the binding for a ~Control~ key, one out of 8
+special keys, we need to insert the following at the beginning of the
+.Xmodmaprc file:
+#+begin_src sh
+!clear Shift
+!clear Lock
+clear Control
+!clear Mod1
+!clear Mod2
+!clear Mod3
+!clear Mod4
+!clear Mod5
+#+end_src
+Then we have to insert the following at the end of the file:
+#+begin_src sh
+!add Shift   = Shift_L Shift_R
+!add Lock    = Caps_Lock
+add Control = Control_L Control_R
+!add Mod1    = Alt_L Alt_R
+!add Mod2    = Mode_switch
+!add Mod3    = Num_Lock
+!add Mod4    =
+!add Mod5    =
+#+end_src
+**** Find out the keycodes of the keys to be redefined
+Start a shell and use either
+#+begin_src sh
+xbindkeys -k
+#+end_src
+(use -mk for key combinations) or
+#+begin_src sh
+xev
+#+end_src
+to find out which key has which keycode and how the keysyms are called
+that you want to assign (some valid keysyms are found [[http://wiki.linuxquestions.org/wiki/List_of_Keysyms_Recognised_by_Xmodmap][here]]).
+Here is an _Example_: since I already have two new ~Control~ keys at
+both sides of the space key, I don't need the old ~Control_L~ key
+anymore. I want to assign ~ISO_Level3_Shift~ (~AltGr~) to this key,
+since I need that key urgently on the left side of the keyboard. I
+type xbindkeys -k in a shell and press enter. Then I press the key I'm
+interested in. First I press the newly defined ~AltGr~ key (the former
+~Control_R~ key, that was redefined using the gnome ~keyboard layout
+options~) and find out that it's keycode is 105 (in my case,
+check on your machine). Then I repeat the procedure and press the old
+~Control_L~ key to find out that it's keycode is 37.
+#+begin_src sh
+tj1@tj-desktop:~$ xbindkeys -k
+press combination of keys or/and click under the window.
+You can use one of the two lines after "NoCommand"
+in $HOME/.xbindkeysrc to bind a key.
+"NoCommand"
+    m:0x90 + c:105
+    Mod2+Mod5 + ISO_Level3_Shift
+tj1@tj-desktop:~$ xbindkeys -k
+Press combination of keys or/and click under the window.
+You can use one of the two lines after "NoCommand"
+in $HOME/.xbindkeysrc to bind a key.
+"NoCommand"
+    m:0x90 + c:37
+    Mod2+Mod5 + ISO_Level3_Shift
+tj1@tj-desktop:~$
+#+end_src
+**** Redefine the keys
+With this information, I visit the .Xmodmaprc in my home directory and
+look up the following line:
+#+begin_src sh
+keycode 105 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
+#+end_src
+I copy and paste the right hand side of this assignment to the right
+hand side of keycode 37 and end up with a second ~AltGr~ key:
+#+begin_src sh
+keycode  37 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
+#+end_src
+Now, what can I do with the redundant old ~Backspace~ key, replaced by
+the old ~Caps_Lock~ key? I use it for two very important Emacs
+commands:
+#+begin_src emacs-lisp
+;; It is bound to ... <S-menu> ...  M-x
+execute-extended-command
+;; It is bound to <menu>, M-/
+dabbrev-expand
+#+end_src
+First, I assign the keysym of the ~Menu~ key to the old ~Backspace~
+key. Then I have two menu keys. On my machine, the ~Menu~ key already
+had an Emacs binding to the very frequently used command
+execute-extended-command (M-x, see [[http://emacsblog.org/][M-x all-things-emacs]]). I changed
+that global binding in my .emacs file to ~S-menu~ (~shift~ and
+~menu~), so I could use ~menu~ for the even more important
+dabbrev-expand command:
+#+begin_src emacs-lisp
+; global key for dabbrev-expand
+(global-set-key [menu] 'dabbrev-expand)
+; global key for execute-extended-command
+(global-set-key [S-menu] 'execute-extended-command)
+#+end_src
+Finally, I go back once again to the .Xmodmaprc file and
+search-and-replace ~dead_tilde~, ~dead_circumflex~, ~dead_grave~ and
+~dead_acute~ with ~asciitilde~, ~asciicircum~, ~grave~ and ~acute~, where it
+seems convenient.
+As a side-note, maybe I should mention that I use [[http://www.emacswiki.org/emacs/WinRing][winring]] as a window
+manager in emacs and I did bind ~<f5>, <f6>, <f7>~ to the three
+important winring.el commands (in my .emacs):
+#+begin_src emacs-lisp
+; put the 3 crucial winring commands on the f5 to f7 keys
+(global-set-key (kbd "<f5>") 'winring-prev-configuration)
+(global-set-key (kbd "<f6>") 'winring-next-configuration)
+(global-set-key (kbd "<f7>") 'winring-jump-to-configuration)
+#+end_src
+I use [[http://www.emacswiki.org/emacs/Yasnippet][yasnippet]] too, and since its use of the ~TAB~ key conflicts with
+other Emacs modes, I use ~<f8>~ to expand snippets with command
+~yas/expand~.
+**** Make the X window system load .Xmodmap
+To ensure that the redefined .Xmodmaprc file is loaded at each start
+of a new X session, create a new ~/.xinitrc in your home directory, look
+for the original .xinitrc, on my machine in
+#+begin_src sh
+ /etc/X11/xinit/xinitrc
+#+end_src
+and copy it's content to the .xinitrc in your home directory. Then add
+the following line:
+#+begin_src sh
+xmodmap ~/.Xmodmap
+#+end_src
+and logout once from your desktop and login again. From now on the
+redefined .Xmodmaprc should be loaded always at the start of a new
+X session, and you should have a keyboard much more suitable for Emacs
+than before. Don't forget to use ~C-m~ (~Control_L~ and ~m~) instead  of the
+~Return~ key, it fits very good with the new key-bindings. And
+remember that you can use a screw-driver to put the plastic caps of
+your keyboard to the right places.
+** Evaluation
+I like my new keybindings, and I hope I can settle down on them and
+develop some automatisms in using them from now on. But anyway, I view the
+efforts to increase my productivity with Emacs as an ongoing
+process. Of course, there are some disadvantages too:
+- the ~Caps_Lock~ functionality is gone.
+- I make heavy use of non-standard Windows keys. Does that work on a
+  terminal too? Probably not suitable for admins.
+- I own a Win 7 notebook. There are less keys than on my regular
+  keyboard, and the Win keys do have their original funcionality under
+  Windows. How do I change the keybindings under Windows 7? I hope
+  it's easier.
+- I'm going to have problems working with standard keybindings on other
+  machines once I get used to my own keybindings.
+However, 95pc of the time I work with my own setup, and thats much
+more comfortable now.
