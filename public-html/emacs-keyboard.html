@@ -7,8 +7,8 @@ lang="en" xml:lang="en">
 <title>Optimizing a WIN-Keyboard for Emacs</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2011-01-19 18:49:17 CET"/>
-<meta name="author" content="bebop52"/>
+<meta name="generated" content="2011-01-21 Fr"/>
+<meta name="author" content="Thorsten"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 <style type="text/css">
@@ -147,14 +147,11 @@ have historical reasons, i.e. they were invented by skilled
 10-finger-typers for the keyboards of their times.
 Therefore I decided to take the challenge and
 </p><ol>
-<li>
-learn to type with 10 fingers (using <a href="http://www.tipp10.de/">tipp10</a>)
+<li>learn to type with 10 fingers (using <a href="http://www.tipp10.de/">tipp10</a>)
 </li>
-<li>
-do some research about Emacs and keyboards
+<li>do some research about Emacs and keyboards
 </li>
 </ol>
-
 </div>
 
 </div>
@@ -272,35 +269,28 @@ keys and the <code>Alt</code> keys to the <code>Win</code> keys in turn. While a
 a look at the other options in this menu and found two more that
 seemed very convenient:
 </p><ul>
-<li>
-use <code>Caps_Lock</code> as additional <code>Backspace</code> key
+<li>use <code>Caps_Lock</code> as additional <code>Backspace</code> key
 </li>
-<li>
-use the (old) right <code>Control</code> key (<code>Control_R</code>) as new <code>AltGr</code> key
-(<code>ISO_Level3_Shift</code>)
+<li>use the (old) right <code>Control</code> key (<code>Control_R</code>) as new <code>AltGr</code> key
+  (<code>ISO_Level3_Shift</code>)
 </li>
 </ul>
-
-<p>A few problems still remained:
-</p><ul>
-<li>
-I needed another <code>AltGr</code> key on the (old) left <code>Control</code> key (<code>Control_L</code>),
-since many important symbols like <code>{} [] \ ~</code> are typed with
-the right hand.
+A few problems still remained:
+<ul>
+<li>I needed another <code>AltGr</code> key on the (old) left <code>Control</code> key (<code>Control_L</code>),
+  since many important symbols like <code>{} [] \ ~</code> are typed with
+  the right hand.
 </li>
-<li>
-the old <code>Backspace</code> key was redundant now.
+<li>the old <code>Backspace</code> key was redundant now.
 </li>
-<li>
-tilde, acute and circumflex were <code>dead keys</code>, I needed to press the
-space key after pressing the dead key to make the symbols show up.
+<li>tilde, acute and circumflex were <code>dead keys</code>, I needed to press the
+  space key after pressing the dead key to make the symbols show up.
 </li>
 </ul>
-
-<p>That was a bit tricky, but finally I made it. The key to success was
+That was a bit tricky, but finally I made it. The key to success was
 <a href="http://wiki.ubuntuusers.de/xmodmap">xmodmap</a>. Here are the steps I followed to adapt my keyboard to an
-efficient use of Emacs:
-</p>
+efficient use of Emacs.
+
 </div>
 
 <div id="outline-container-1_3_3_1" class="outline-5">
@@ -308,7 +298,7 @@ efficient use of Emacs:
 <div class="outline-text-5" id="text-1_3_3_1">
 
 <p>Start a shell in your home directory (represented by ~) and type
-the following:
+   the following:
 </p>
 
 
@@ -394,16 +384,16 @@ check on your machine). Then I repeat the procedure and press the old
 
 <pre class="src src-sh">tj1@tj-desktop:~$ xbindkeys -k
 press combination of keys or/and click under the window.
-You can use one of the two lines after <span style="color: #bc8f8f;">"NoCommand"</span>
-<span style="color: #a020f0;">in</span> $<span style="color: #b8860b;">HOME</span>/.xbindkeysrc to bind a key.
-<span style="color: #bc8f8f;">"NoCommand"</span>
+You can use one of the two lines after <span style="color: #ffa07a;">"NoCommand"</span>
+<span style="color: #00ffff;">in</span> $<span style="color: #eedd82;">HOME</span>/.xbindkeysrc to bind a key.
+<span style="color: #ffa07a;">"NoCommand"</span>
     m:0x90 + c:105
     Mod2+Mod5 + ISO_Level3_Shift
 tj1@tj-desktop:~$ xbindkeys -k
 Press combination of keys or/and click under the window.
-You can use one of the two lines after <span style="color: #bc8f8f;">"NoCommand"</span>
-<span style="color: #a020f0;">in</span> $<span style="color: #b8860b;">HOME</span>/.xbindkeysrc to bind a key.
-<span style="color: #bc8f8f;">"NoCommand"</span>
+You can use one of the two lines after <span style="color: #ffa07a;">"NoCommand"</span>
+<span style="color: #00ffff;">in</span> $<span style="color: #eedd82;">HOME</span>/.xbindkeysrc to bind a key.
+<span style="color: #ffa07a;">"NoCommand"</span>
     m:0x90 + c:37
     Mod2+Mod5 + ISO_Level3_Shift
 tj1@tj-desktop:~$
@@ -444,9 +434,9 @@ commands:
 </p>
 
 
-<pre class="src src-emacs-lisp"><span style="color: #b22222;">;; </span><span style="color: #b22222;">It is bound to ... &lt;S-menu&gt; ...  M-x
+<pre class="src src-emacs-lisp"><span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">It is bound to ... &lt;S-menu&gt; ...  M-x
 </span>execute-extended-command
-<span style="color: #b22222;">;; </span><span style="color: #b22222;">It is bound to &lt;menu&gt;, M-/
+<span style="color: #ff7f24;">;; </span><span style="color: #ff7f24;">It is bound to &lt;menu&gt;, M-/
 </span>dabbrev-expand
 </pre>
 
@@ -462,9 +452,9 @@ dabbrev-expand command:
 </p>
 
 
-<pre class="src src-emacs-lisp"><span style="color: #b22222;">; </span><span style="color: #b22222;">global key for dabbrev-expand
+<pre class="src src-emacs-lisp"><span style="color: #ff7f24;">; </span><span style="color: #ff7f24;">global key for dabbrev-expand
 </span>(global-set-key [menu] 'dabbrev-expand)
-<span style="color: #b22222;">; </span><span style="color: #b22222;">global key for execute-extended-command
+<span style="color: #ff7f24;">; </span><span style="color: #ff7f24;">global key for execute-extended-command
 </span>(global-set-key [S-menu] 'execute-extended-command)
 </pre>
 
@@ -475,15 +465,15 @@ search-and-replace <code>dead_tilde</code>, <code>dead_circumflex</code>, <code>
 <code>dead_acute</code> with <code>asciitilde</code>, <code>asciicircum</code>, <code>grave</code> and <code>acute</code>, where it
 seems convenient.
 As a side-note, maybe I should mention that I use <a href="http://www.emacswiki.org/emacs/WinRing">winring</a> as a window
-manager in emacs and I did bind <code>&lt;f5&gt;, &lt;f6&gt;, &lt;f7&gt;</code> to the three
+manager in emacs and I did bind <code>&lt;f5>, &lt;f6>, &lt;f7&gt;</code> to the three
 important winring.el commands (in my .emacs):
 </p>
 
 
-<pre class="src src-emacs-lisp"><span style="color: #b22222;">; </span><span style="color: #b22222;">put the 3 crucial winring commands on the f5 to f7 keys
-</span>(global-set-key (kbd <span style="color: #bc8f8f;">"&lt;f5&gt;"</span>) 'winring-prev-configuration)
-(global-set-key (kbd <span style="color: #bc8f8f;">"&lt;f6&gt;"</span>) 'winring-next-configuration)
-(global-set-key (kbd <span style="color: #bc8f8f;">"&lt;f7&gt;"</span>) 'winring-jump-to-configuration)
+<pre class="src src-emacs-lisp"><span style="color: #ff7f24;">; </span><span style="color: #ff7f24;">put the 3 crucial winring commands on the f5 to f7 keys
+</span>(global-set-key (kbd <span style="color: #ffa07a;">"&lt;f5&gt;"</span>) 'winring-prev-configuration)
+(global-set-key (kbd <span style="color: #ffa07a;">"&lt;f6&gt;"</span>) 'winring-next-configuration)
+(global-set-key (kbd <span style="color: #ffa07a;">"&lt;f7&gt;"</span>) 'winring-jump-to-configuration)
 </pre>
 
 
@@ -542,35 +532,29 @@ develop some automatisms in using them from now on. But anyway, I view the
 efforts to increase my productivity with Emacs as an ongoing
 process. Of course, there are some disadvantages too:
 </p><ul>
-<li>
-the <code>Caps_Lock</code> functionality is gone.
+<li>the <code>Caps_Lock</code> functionality is gone.
 </li>
-<li>
-I make heavy use of non-standard Windows keys. Does that work on a
-terminal too? Probably not suitable for admins.
+<li>I make heavy use of non-standard Windows keys. Does that work on a
+  terminal too? Probably not suitable for admins.
 </li>
-<li>
-I own a Win 7 notebook. There are less keys than on my regular
-keyboard, and the Win keys do have their original funcionality under
-Windows. How do I change the keybindings under Windows 7? I hope
-it's easier.
+<li>I own a Win 7 notebook. There are less keys than on my regular
+  keyboard, and the Win keys do have their original funcionality under
+  Windows. How do I change the keybindings under Windows 7? I hope
+  it's easier.
 </li>
-<li>
-I'm going to have problems working with standard keybindings on other
-machines once I get used to my own keybindings.
+<li>I'm going to have problems working with standard keybindings on other
+  machines once I get used to my own keybindings.
 </li>
 </ul>
-
-<p>However, 95pc of the time I work with my own setup, and thats much
+However, 95pc of the time I work with my own setup, and thats much
 more comfortable now.
-</p></div>
+</div>
 </div>
 </div>
 <div id="postamble">
-<p class="author"> Author: bebop52
-</p>
-<p class="date"> Date: 2011-01-19 18:49:17 CET</p>
-<p class="creator">HTML generated by org-mode 7.4 in emacs 23</p>
+<p class="author">Author: Thorsten</p>
+<p class="creator">Org version 7.5 with Emacs version 23</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
 </div>
 </div>
 </body>

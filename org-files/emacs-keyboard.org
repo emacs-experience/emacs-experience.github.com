@@ -1,6 +1,9 @@
- #+TITLE: Optimizing a WIN-Keyboard for Emacs
+#+SETUPFILE: ~/projects/org-templates/level-1.org
+#+TITLE: Optimizing a WIN-Keyboard for Emacs
 #+OPTIONS: H:4
 #+OPTIONS: toc:4
+
+
 * The Emacs Keyboard
 ** Why the keyboard matters
 The USP (Unique Selling Proposition) of Emacs is enhanced
