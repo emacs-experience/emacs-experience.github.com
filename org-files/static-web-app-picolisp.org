@@ -1,0 +1,34 @@
+#+setupfile:  ~/projects/org-templates/level-1.org
+#+title: How to write a static Web-App in PicoLisp
+
+* Why would anybody do that?
+#+begin_quote
+"You can use PicoLisp to generate static HTML pages. This does not make much
+sense in itself, because you could directly write HTML code as well, but it
+forms the base for interactive applications, and allows us to introduce the
+application server and other fundamental concepts."
+(from [[http://software-lab.de/doc/app.html][PicoLisp Application Development]])
+#+end_quote
+
+* Assumptions
+You have a running PicoLisp on your machine and know how to start a
+PicoLisp application server that loads your PicoLisp source file
+(again, see [[http://software-lab.de/doc/app.html][PicoLisp Application Development]]).
+
+* The ~html~-Function
+The ~html~-function is a convenient printing function. It takes four
+arguments, that can be followed by an arbritary number of normal Lisp
+expressions:
+ 
+1. max-age value for cache-control (zero means "no cache")
+2. page-title
+3. a CSS-file name (NIL if using no file, a list if using more than
+   one)
+4. CSS style attribute specification, passed to the ~body~-tag (NIL if
+   none)
+
+Example:
+#+begin_src emacs-lisp
+(html 0 "Hello" "lib.css" NIL
+   "Hello Tech-Translation")
+#+end_src  
